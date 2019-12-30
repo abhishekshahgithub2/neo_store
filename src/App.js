@@ -13,9 +13,6 @@ class App extends Component {
         <Democarousel />
         <Home />
         <Footer />
-        <div>
-          Test
-        </div>
       </div>
     )
   }

@@ -292,6 +292,49 @@ html {
   margin-bottom: 10px;
 }
 
-.expandmore .material-icons {
+/* .expandmore .material-icons {
   padding: 20%;
+} */
+
+.dropdown {
+  background-color: #fff;
+  margin: 0 auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 4px;
+}
+
+.drop_btn {
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  line-height: 48px;
+  height: 48px;
+  padding: 0 16px;
+  text-align: left;
+  text-decoration: none;
+  max-width: 100%;
+  position: relative;
+  background: 0 0;
+  color: rgba(0,0,0,.87);
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.drop {
+  background-color: black;
+  border: none;
+}
+
+.btn2 {
+  width: 78px;
+  height: 38px;
+  background-color: #fff;
+  border: #fff;
+  margin: 10px;
+  border-radius: 4px;
 }

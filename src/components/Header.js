@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
+
 import '../App.css';
 
 import Badge from '@material-ui/core/Badge';
@@ -17,6 +20,27 @@ const StyledBadge = withStyles(theme => ({
   }))(Badge);
 
 export class Header extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            clicked: false,
+            dropdownOpen: false
+        }
+    }
+
+
+    handleClick = () => {
+        this.setState({
+            clicked: !this.state.clicked
+        })
+    }
+
+    setOpen = () => {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        })
+    }
+
     render() {
         return (
             <div className="topbar">
@@ -38,11 +62,31 @@ export class Header extends Component {
                             </StyledBadge>
                         </IconButton>
                         Cart</button>
-                    <button id="btn1"><i class="material-icons">account_box</i>
-                        <button className="expandmore">
+                    {/* <button id="btn1" onClick={this.handleClick}><i class="material-icons">account_box</i>
+                        <button className="expandmore" >
                             <i class="material-icons">expand_more</i>
                         </button>
-                    </button>
+                        { this.state.clicked && 
+                        <div className="dropdown">
+                                <button className="drop_btn">Login</button>
+                                <button className="drop_btn">Register</button>
+                        </div>
+                        }
+                    </button> */}
+                    <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.setOpen}>
+                        <DropdownToggle className="drop" >
+                            <button id="btn1" onClick={this.handleClick}><i class="material-icons">account_box</i>
+                                <button className="expandmore" >
+                                    <i class="material-icons">expand_more</i>
+                                </button>
+                            </button>
+                        </DropdownToggle>
+                        <DropdownMenu>
+                            <DropdownItem>Login</DropdownItem>
+                            {/* <DropdownItem divider /> */}
+                            <DropdownItem>Register</DropdownItem>
+                        </DropdownMenu>
+                    </ButtonDropdown>
                 
             </div>
         )
