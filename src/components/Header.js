@@ -7,6 +7,7 @@ import '../App.css';
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
+import { Link } from "react-router-dom";
 // import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const StyledBadge = withStyles(theme => ({
@@ -48,9 +49,9 @@ export class Header extends Component {
                     <span className="store-text">Neo<span className="store">STORE</span></span>
                     
                     <span className="nav1">
-                        <button id="navBtn">Home</button>
-                        <button id="navBtn">Products</button>
-                        <button id="navBtn">Order</button>
+                        <button id="navBtn"><Link to="/" style={{ color: '#FFF' }}>Home</Link></button>
+                        <button id="navBtn"><Link to="/products" style={{ color: '#FFF' }}>Products</Link></button>
+                        <button id="navBtn"><Link to="/order" style={{ color: '#FFF' }}>Order</Link></button>
                     </span>
 
                     <input id="search" placeholder="Search..." type="text" autoComplete="off" class="inputtop"/>
@@ -82,9 +83,9 @@ export class Header extends Component {
                             </button>
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem>Login</DropdownItem>
+                            <DropdownItem><Link to="/login" style={{ color: '#000' }}>Login</Link></DropdownItem>
                             {/* <DropdownItem divider /> */}
-                            <DropdownItem>Register</DropdownItem>
+                            <DropdownItem><Link to="/register" style={{ color: '#000' }}>Register</Link></DropdownItem>
                         </DropdownMenu>
                     </ButtonDropdown>
                 

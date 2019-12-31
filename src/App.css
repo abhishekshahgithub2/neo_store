@@ -338,3 +338,68 @@ html {
   margin: 10px;
   border-radius: 4px;
 }
+
+.form-card {
+  padding: 4%;
+}
+
+.social-btn {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+.social-btn-1 {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 70px;
+  background-color: #3b5998;
+  color: #fff;
+  border-color: #3b5998;
+  border-radius: 4px;
+  margin: 10px;
+  position: relative;
+}
+
+.social-btn-2 {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  height: 70px;
+  background-color: #db4437;
+  color: #fff;
+  border-color: #db4437;
+  border-radius: 4px;
+  margin: 10px;
+  position: relative;
+}
+
+.socialLogin {
+  margin-left: 30px;
+}
+
+.social-btn-1 img {
+  position: absolute;
+  left: 20%;
+}
+
+.social-btn-2 img {
+  position: absolute;
+  left: 20%;
+}
+
+.btn-none {
+  background: none;
+  border: none;
+}
+
+.section-login {
+  margin: 10% 0 ;
+}

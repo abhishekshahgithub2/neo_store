@@ -1,0 +1,1 @@
+export  const domain = 'http://180.149.241.208:3022';

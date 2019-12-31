@@ -10,6 +10,7 @@ import ReactStars from 'react-rating-stars-component'
 import StarRating from 'react-star-rating'
 import StarRatings from 'react-star-ratings';
 
+import {domain} from '../urls/url';
 
 export class Home extends Component {
     constructor(props){
@@ -20,7 +21,7 @@ export class Home extends Component {
     }
 
     componentDidMount(){
-        fetch('http://180.149.241.208:3022/defaultTopRatingProduct')
+        fetch(`${domain}/defaultTopRatingProduct`)
         .then(response => response.json())
         .then(data => this.setState({ display: data.product_details }));
     }
@@ -38,7 +39,7 @@ export class Home extends Component {
                         {item.DashboardProducts.map(item2=>
                             <div className="card1">
                                 <div className="center">
-                                    <img className="test" src={`http://180.149.241.208:3022/${item2.product_image}`} />
+                                    <img className="test" src={`${domain}/${item2.product_image}`} />
                                 </div>
                                 <div className="center product_name">
                                     {item2.product_name}

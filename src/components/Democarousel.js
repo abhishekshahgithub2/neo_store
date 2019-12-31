@@ -4,6 +4,8 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 import '../App.css';
 
+import {domain} from '../urls/url';
+
 export class Democarousel extends Component {
     constructor(props){
         super(props);
@@ -13,7 +15,8 @@ export class Democarousel extends Component {
     }
 
     componentDidMount(){
-        fetch('http://180.149.241.208:3022/getAllCategories')
+        // fetch('http://180.149.241.208:3022/getAllCategories')
+        fetch(`${domain}/getAllCategories`)
         .then(response => response.json())
         .then(data => this.setState({ hits: data.category_details }));
     }
@@ -25,7 +28,7 @@ export class Democarousel extends Component {
                 <Carousel>
                 {hits.map(hit =>
                     <div>
-                        <img src={`http://180.149.241.208:3022/${hit.product_image}`} />
+                        <img src={`${domain}/${hit.product_image}`} />
                     </div>
                 )}
                 </Carousel>
