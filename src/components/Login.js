@@ -8,6 +8,18 @@ import {
 
 import { Link } from "react-router-dom";
 
+import ModalExample from './ModalExample';
+
+import '../App.css';
+
+import { useState } from 'react';
+
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
+import Loader from './Loader';
+
+const axios = require('axios');
+
 export class Login extends Component {
     constructor(props){
         super(props);
@@ -16,9 +28,19 @@ export class Login extends Component {
             password:'',
             disable: true,
             emailError:'',
-            passwordError:''
+            passwordError:'',
+            modal: false,
+            loading: false,
+            data: '',
+            success: '',
+            status_code: '',
+            message: ''
         }
     }
+
+    
+
+
 
     // handleEmail = (e) => {
     //     this.setState({
@@ -34,18 +56,22 @@ export class Login extends Component {
 
     handleChange = (e) => {
         this.setState({ [e.target.name] : e.target.value });
+        this.validate();
      }
 
     validate = () => {
         let emailError = "";
         let passwordError = "";
 
-        if(!this.state.email.includes('@')){
-            emailError = 'invalid Email';
+        let reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if(!reg.test(this.state.email)){
+            emailError = 'Invalid Email , should be of format xyz@abc.com ';
         }
 
-        if(this.state.password.length < 8){
-            passwordError = 'min length of password should be 8';
+        if(!this.state.password){
+            passwordError = 'password is required';
+            // passwordError = 'min length of password should be 8';
         }
 
         if(emailError || passwordError){
@@ -62,6 +88,27 @@ export class Login extends Component {
         const isValid = this.validate();
         if(isValid){
             console.log(this.state);
+            const user = {
+                email: this.state.email,
+                pass: this.state.password
+            };
+
+            // axios.post('http://180.149.241.208:3022/login',user)
+            // .then( res => console.log(res.data));
+
+
+            this.setState({ loading: true }, () => {
+                axios.post('http://180.149.241.208:3022/login',user)
+                  .then(result => this.setState({
+                    loading: false,
+                    success: result.data.success,
+                    status_code: result.data.status_code,
+                    message: result.data.message
+                  },console.log(result.data)));
+              });
+
+            console.log(this.state);
+
             this.setState({
                 email:'',
                 password: '',
@@ -72,9 +119,24 @@ export class Login extends Component {
 
     }
 
+    handleToggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        })
+    }
+
+    handleEnter = () => {
+        this.validate();
+    }
 
 
     render() {
+        
+        const {
+            buttonLabel,
+            className
+          } = this.props;
+
         return (
             <div>
                 {/* <form onSubmit={this.handleSubmit}>
@@ -104,6 +166,7 @@ export class Login extends Component {
                 </form> */}
 
             <Container className="App">
+            {this.state.loading ? <h1>Loading</h1> : <ModalExample status={this.state.status_code} message={this.state.message}/> }
                 <Row className="section-login">
                     <Col>
                         <Row>
@@ -138,6 +201,7 @@ export class Login extends Component {
                                     placeholder="Email Address" 
                                     value={this.state.email} 
                                     onChange={this.handleChange} 
+                                    onKeyUp={this.handleEnter}
                                 />
                                 {this.state.emailError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.emailError}</div>) : null }
                                 </FormGroup>
@@ -151,6 +215,7 @@ export class Login extends Component {
                                     placeholder="Password" 
                                     value={this.state.password} 
                                     onChange={this.handleChange} 
+                                    onKeyUp={this.handleEnter}
                                 />
                                 {this.state.passwordError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.passwordError}</div>) : null }
                                 </FormGroup>
@@ -161,10 +226,15 @@ export class Login extends Component {
                     </Col>
                 </Row>
                 <div className="center section-login">
-                    <button className="btn-none"><Link to="/register" style={{ color: '#000' }}>Register Now</Link></button>
-                    |
-                    <button className="btn-none">Forgotten ?</button>
+                    {/* <button className="btn-none"><Link to="/register" style={{ color: '#000' }}>Register Now</Link></button> */}
+                    <Row>
+                        <Col />
+                        <Col><Button color="danger"><Link to="/register" style={{ color: '#fff'}}>Register</Link></Button></Col>
+                        <Col><ModalExample buttonLabel="Forgot ?" /></Col>
+                        <Col />
+                    </Row>
                 </div>
+
             </Container>
 
 

@@ -6,7 +6,12 @@ import {
     Button, Row , Card
   } from 'reactstrap';
 
+  
+
 import { Link } from "react-router-dom";
+
+const axios = require('axios');
+
 
 export class Register extends Component {
     constructor(props){
@@ -54,7 +59,7 @@ export class Register extends Component {
         // }
 
         if(!re.test(this.state.email)){
-            emailError = 'Invalid Email';
+            emailError = 'Invalid Email , should be of format xyz@abc.com ';
         }
 
         if(this.state.password.length < 8){
@@ -71,7 +76,7 @@ export class Register extends Component {
 
         if(!this.state.phone){
             phoneError = 'Phone no is required';
-        }
+        }   
 
         if(!this.state.confirmPassword){
             confirmPasswordError = 'Confirm password is required';
@@ -94,7 +99,24 @@ export class Register extends Component {
         e.preventDefault();
         const isValid = this.validate();
         if(isValid){
-            console.log(this.state);
+
+
+            const user = {
+                first_name: this.state.firstname,
+                last_name: this.state.lastname,
+                email: this.state.email,
+                pass: this.state.password,
+                confirmPass: this.state.confirmPassword,
+                phone_no: this.state.phone,
+                gender: this.state.gender
+            };
+
+            // console.log(user);
+
+            axios.post('http://180.149.241.208:3022/register',user).then( res => console.log(res.data));
+            
+
+            // console.log(this.state);
             this.setState({
                 email:'',
                 password:'',
@@ -116,9 +138,118 @@ export class Register extends Component {
 
     }
 
+    handleEnter = () => {
+        this.validate();
+    }
+
+
+
     render() {
         return (
             <div>
+                <Container className="App">
+                    <Row className="section-login">
+                        <Col>
+                            <Card className="form-card">
+                            <h2>Register to NeoSTORE</h2>
+                                <Form className="form" onSubmit={this.handleSubmit}>
+                                    <Col>
+                                        <FormGroup>
+                                        <Label>First Name</Label>
+                                        <Input
+                                            name="firstname"
+                                            type="text" 
+                                            placeholder="Enter firstname" 
+                                            value={this.state.firstname} 
+                                            onChange={this.handleChange} 
+                                            onKeyUp={this.handleEnter}
+                                        />
+                                        {this.state.firstnameError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.firstnameError}</div>) : null }
+                                        </FormGroup>
+                                    </Col>
+
+                                    <Col>
+                                        <FormGroup>
+                                        <Label>Last Name</Label>
+                                        <Input
+                                            name="lastname"
+                                            type="text" 
+                                            placeholder="Enter lastname" 
+                                            value={this.state.lastname} 
+                                            onChange={this.handleChange} 
+                                            onKeyUp={this.handleEnter}
+                                        />
+                                        {this.state.lastnameError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.lastnameError}</div>) : null }
+                                        </FormGroup>
+                                    </Col>
+                                    
+                                    <Col>
+                                        <FormGroup>
+                                        <Label>Email</Label>
+                                        <Input
+                                            name="email"
+                                            type="text" 
+                                            placeholder="Email Address" 
+                                            value={this.state.email} 
+                                            onChange={this.handleChange} 
+                                            onKeyUp={this.handleEnter}
+                                        />
+                                        {this.state.emailError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.emailError}</div>) : null }
+                                        </FormGroup>
+                                    </Col>
+                                    <Col>
+                                        <FormGroup>
+                                        <Label>Password</Label>
+                                        <Input
+                                            name="password"
+                                            type="password" 
+                                            placeholder="Password" 
+                                            value={this.state.password} 
+                                            onChange={this.handleChange} 
+                                            onKeyUp={this.handleEnter}
+                                        />
+                                        {this.state.passwordError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.passwordError}</div>) : null }
+                                        </FormGroup>
+                                    </Col>
+                                    <Col>
+                                        <FormGroup>
+                                        <Label>Confirm Password</Label>
+                                        <Input
+                                            name="confirmPassword"
+                                            type="password" 
+                                            placeholder="confirmPassword" 
+                                            value={this.state.confirmPassword} 
+                                            onChange={this.handleChange} 
+                                            onKeyUp={this.handleEnter}
+                                        />
+                                        {this.state.confirmPasswordError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.confirmPasswordError}</div>) : null }
+                                        </FormGroup>
+                                    </Col>
+                                    <Col>
+                                        <FormGroup>
+                                        <Label>Phone No:</Label>
+                                        <Input
+                                            name="phone"
+                                            type="number" 
+                                            placeholder="phone number" 
+                                            value={this.state.phone} 
+                                            onChange={this.handleChange} 
+                                            onKeyUp={this.handleEnter}
+                                        />
+                                        {this.state.phoneError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.phoneError}</div>) : null }
+                                        </FormGroup>
+                                    </Col>
+                                    <div onChange={this.handleGender}>
+                                        <input type="radio" value="MALE" name="gender"/> Male
+                                        <input type="radio" value="FEMALE" name="gender"/> Female
+                                    </div>
+                                    <Button disabled={ this.state.email.length > 0 && this.state.password.length > 0 && this.state.firstname.length > 0 && this.state.lastname.length > 0 && this.state.confirmPassword.length > 0 && this.state.phone.length > 0 && this.state.gender.length > 0 ? false : true }>Register</Button>
+                                </Form>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+                <hr/>
                 <Container className="App">
                     <Row className="section-login">
                         <Col>
@@ -139,103 +270,6 @@ export class Register extends Component {
                         </Col>
                     </Row>
                 </Container>        
-                <hr/>
-                <Container className="App">
-                    <Row className="section-login">
-                        <Col>
-                            <Card className="form-card">
-                            <h2>Login to NeoSTORE</h2>
-                                <Form className="form" onSubmit={this.handleSubmit}>
-                                    <Col>
-                                        <FormGroup>
-                                        <Label>First Name</Label>
-                                        <Input
-                                            name="firstname"
-                                            type="text" 
-                                            placeholder="Enter firstname" 
-                                            value={this.state.firstname} 
-                                            onChange={this.handleChange} 
-                                        />
-                                        {this.state.firstnameError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.firstnameError}</div>) : null }
-                                        </FormGroup>
-                                    </Col>
-
-                                    <Col>
-                                        <FormGroup>
-                                        <Label>Last Name</Label>
-                                        <Input
-                                            name="lastname"
-                                            type="text" 
-                                            placeholder="Enter lastname" 
-                                            value={this.state.lastname} 
-                                            onChange={this.handleChange} 
-                                        />
-                                        {this.state.lastnameError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.lastnameError}</div>) : null }
-                                        </FormGroup>
-                                    </Col>
-                                    
-                                    <Col>
-                                        <FormGroup>
-                                        <Label>Email</Label>
-                                        <Input
-                                            name="email"
-                                            type="text" 
-                                            placeholder="Email Address" 
-                                            value={this.state.email} 
-                                            onChange={this.handleChange} 
-                                        />
-                                        {this.state.emailError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.emailError}</div>) : null }
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup>
-                                        <Label>Password</Label>
-                                        <Input
-                                            name="password"
-                                            type="password" 
-                                            placeholder="Password" 
-                                            value={this.state.password} 
-                                            onChange={this.handleChange} 
-                                        />
-                                        {this.state.passwordError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.passwordError}</div>) : null }
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup>
-                                        <Label>Confirm Password</Label>
-                                        <Input
-                                            name="confirmPassword"
-                                            type="password" 
-                                            placeholder="confirmPassword" 
-                                            value={this.state.confirmPassword} 
-                                            onChange={this.handleChange} 
-                                        />
-                                        {this.state.confirmPasswordError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.confirmPasswordError}</div>) : null }
-                                        </FormGroup>
-                                    </Col>
-                                    <Col>
-                                        <FormGroup>
-                                        <Label>Phone No:</Label>
-                                        <Input
-                                            name="phone"
-                                            type="number" 
-                                            placeholder="phone number" 
-                                            value={this.state.phone} 
-                                            onChange={this.handleChange} 
-                                        />
-                                        {this.state.phoneError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.phoneError}</div>) : null }
-                                        </FormGroup>
-                                    </Col>
-                                    <div onChange={this.handleGender}>
-                                        <input type="radio" value="MALE" name="gender"/> Male
-                                        <input type="radio" value="FEMALE" name="gender"/> Female
-                                    </div>
-                                    <Button>Register</Button>
-                                </Form>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container>
             </div>
         )
     }

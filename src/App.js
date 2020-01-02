@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Order from './components/Order';
 import Products from './components/Products';
+import Forgot from './components/Forgot';
 
 import {
   BrowserRouter as Router,
@@ -45,6 +46,9 @@ class App extends Component {
                   </Route>
                   <Route path="/products">
                     <Products />
+                  </Route>
+                  <Route path="/forgot">
+                    <Forgot />
                   </Route>
                 </Switch>
               <Footer/>
