@@ -9,6 +9,8 @@ import Register from './components/Register';
 import Order from './components/Order';
 import Products from './components/Products';
 import Forgot from './components/Forgot';
+import Logout from './components/Logout';
+import Profile from './components/Profile';
 
 import {
   BrowserRouter as Router,
@@ -49,6 +51,12 @@ class App extends Component {
                   </Route>
                   <Route path="/forgot">
                     <Forgot />
+                  </Route>
+                  <Route path="/logout">
+                    <Logout />
+                  </Route>
+                  <Route path="/profile">
+                    <Profile />
                   </Route>
                 </Switch>
               <Footer/>

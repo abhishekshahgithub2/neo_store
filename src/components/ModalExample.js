@@ -80,8 +80,6 @@ export class ModalExample extends Component {
                                                     <Col>
                                                         <Form className="form">
                                                             <FormGroup>
-                                                                {this.props.status}
-                                                                {this.props.message}
                                                                 <Label>Email</Label>
                                                                 <Input
                                                                     name="email"
@@ -89,7 +87,6 @@ export class ModalExample extends Component {
                                                                     placeholder="Email Address" 
                                                                     value={this.state.email} 
                                                                     onChange={this.handleChange} 
-                                                                    onKeyPress={this.handleEnter}
                                                                     />
                                                             
                                                                 {this.state.emailError ? (<div style={{ fontSize: 12 , color: "red"}}>{this.state.emailError}</div>) : null }

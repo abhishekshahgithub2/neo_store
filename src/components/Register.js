@@ -30,7 +30,8 @@ export class Register extends Component {
             lastnameError:'',
             confirmPasswordError:'',
             phoneError:'',
-            gender:''
+            gender:'',
+            redirect:''
         }
     }
 
@@ -113,7 +114,8 @@ export class Register extends Component {
 
             // console.log(user);
 
-            axios.post('http://180.149.241.208:3022/register',user).then( res => console.log(res.data));
+            axios.post('http://180.149.241.208:3022/register',user)
+                .then( res => console.log(res.data));
             
 
             // console.log(this.state);
@@ -142,11 +144,18 @@ export class Register extends Component {
         this.validate();
     }
 
+    redirect = () => {
+        this.setState({
+            redirect: true
+        })
+    }
+
 
 
     render() {
         return (
             <div>
+                {this.state.redirect ? window.location.href = "/" : ''}    
                 <Container className="App">
                     <Row className="section-login">
                         <Col>
@@ -243,7 +252,7 @@ export class Register extends Component {
                                         <input type="radio" value="MALE" name="gender"/> Male
                                         <input type="radio" value="FEMALE" name="gender"/> Female
                                     </div>
-                                    <Button disabled={ this.state.email.length > 0 && this.state.password.length > 0 && this.state.firstname.length > 0 && this.state.lastname.length > 0 && this.state.confirmPassword.length > 0 && this.state.phone.length > 0 && this.state.gender.length > 0 ? false : true }>Register</Button>
+        <Button disabled={ this.state.email.length > 0 && this.state.password.length > 0 && this.state.firstname.length > 0 && this.state.lastname.length > 0 && this.state.confirmPassword.length > 0 && this.state.phone.length > 0 && this.state.gender.length > 0 ? false : true }>Register</Button>
                                 </Form>
                             </Card>
                         </Col>

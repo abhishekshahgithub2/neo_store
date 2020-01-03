@@ -42,6 +42,10 @@ export class Header extends Component {
         })
     }
 
+    removeToken = () => {
+        localStorage.removeItem('token');
+    }
+
     render() {
         return (
             <div className="topbar">
@@ -54,7 +58,7 @@ export class Header extends Component {
                         <button id="navBtn"><Link to="/order" style={{ color: '#FFF' }}>Order</Link></button>
                     </span>
 
-                    <input id="search" placeholder="Search..." type="text" autoComplete="off" class="inputtop"/>
+                    <input id="search" placeholder="Search..." type="text" autoComplete="off" className="inputtop"/>
                     <button id="btn1">
                         <IconButton aria-label="cart">
                             <StyledBadge badgeContent={4} color="primary">
@@ -76,16 +80,18 @@ export class Header extends Component {
                     </button> */}
                     <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.setOpen}>
                         <DropdownToggle className="drop" >
-                            <button id="btn1" onClick={this.handleClick}><i class="material-icons">account_box</i>
+                            <button id="btn1" onClick={this.handleClick}><i className="material-icons">account_box</i>
                                 <button className="expandmore" >
-                                    <i class="material-icons">expand_more</i>
+                                    <i className="material-icons">expand_more</i>
                                 </button>
                             </button>
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem><Link to="/login" style={{ color: '#000' }}>Login</Link></DropdownItem>
-                            {/* <DropdownItem divider /> */}
-                            <DropdownItem><Link to="/register" style={{ color: '#000' }}>Register</Link></DropdownItem>
+                            { localStorage.getItem('token') ? '' : <DropdownItem><Link to="/login" style={{ color: '#000' }}>Login</Link></DropdownItem> }
+                                {/* <DropdownItem divider /> */}
+                            { localStorage.getItem('token') ? '' : <DropdownItem><Link to="/register" style={{ color: '#000' }}>Register</Link></DropdownItem> }
+                            { localStorage.getItem('token') ? <DropdownItem><Link to="/profile" style={{ color: '#000' }} >Profile</Link></DropdownItem> : '' }  
+                            { localStorage.getItem('token') ? <DropdownItem><Link to="/logout" style={{ color: '#000' }} onClick={this.removeToken}>Logout</Link></DropdownItem> : '' }                          
                         </DropdownMenu>
                     </ButtonDropdown>
                 
