@@ -16,6 +16,7 @@ export class Democarousel extends Component {
 
     componentDidMount(){
         // fetch('http://180.149.241.208:3022/getAllCategories')
+        // domain = http://180.149.241.208:3022
         fetch(`${domain}/getAllCategories`)
         .then(response => response.json())
         .then(data => this.setState({ hits: data.category_details }));

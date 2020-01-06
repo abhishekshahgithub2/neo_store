@@ -10,17 +10,17 @@ export class Profile extends Component {
     }
     
     componentDidMount(){
-        fetch(`${domain}/getCustProfile`, {
-            credentials: 'include',
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem('token')}`,
-              'Access-Control-Allow-Origin':*
-            }
-          })
+        // fetch(`${domain}/getCustProfile`, {
+        //     credentials: 'include',
+        //     headers: {
+        //       'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        //       'Access-Control-Allow-Origin':*
+        //     }
+        //   })
 
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .then(console.log('success'))
+        // .then(response => response.json())
+        // .then(data => console.log(data))
+        // .then(console.log('success'))
 
         // const AuthStr = 'Bearer '.concat(localStorage.getItem('token')); 
         // axios.get(`${domain}/getCustProfile`, { headers: { Authorization: AuthStr } })
