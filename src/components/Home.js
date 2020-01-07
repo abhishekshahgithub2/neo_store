@@ -11,6 +11,8 @@ import StarRating from 'react-star-rating'
 import StarRatings from 'react-star-ratings';
 
 import {domain} from '../urls/url';
+import { Link } from "react-router-dom";
+
 
 export class Home extends Component {
     constructor(props){
@@ -42,7 +44,7 @@ export class Home extends Component {
                                     <img className="test" src={`${domain}/${item2.product_image}`} />
                                 </div>
                                 <div className="center product_name">
-                                    {item2.product_name}
+                                    <Link to={`/productDetail/${item2._id}`}>{item2.product_name}</Link>
                                 </div>
                                 <div className="center product_cost">
                                     <bold>₹ {item2.product_cost}</bold>

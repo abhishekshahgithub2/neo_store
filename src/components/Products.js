@@ -9,8 +9,8 @@ import {domain} from '../urls/url';
 import StarRatings from 'react-star-ratings';
 import '../App.css';
 import axios from 'axios'
-
-
+import { Link } from "react-router-dom";
+import productDetail from '../components/ProductDetail';
 
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 
@@ -25,7 +25,11 @@ export class Products extends Component {
             colors: [],
             show: false,
             showColor: false,
-            no_products: ''
+            no_products: '',
+            cat_selcted: false,
+            id_cat:'',
+            currentPage: 1,
+            displayPerPage: 9
         };
     }
 
@@ -83,7 +87,13 @@ export class Products extends Component {
     sortCat = (item) => {
         fetch(`${domain}/getProductByCateg/${item}`)
         .then(response => response.json())
-        .then(data=>this.setState({display: data.product_details}))
+        .then(data=>this.setState({display: data.product_details,cat_selcted:true,id_cat:item}))
+    }
+
+    sortByCatColor = (category_id,color_id) => {
+        fetch(`${domain}/getProductByColor/${category_id}/${color_id}`)
+        .then(response => response.json())
+        .then(data=>this.setState({display: data.product_details,cat_selcted:false}))
     }
 
     sortByColor = (id) => {
@@ -94,7 +104,31 @@ export class Products extends Component {
         // .catch(error => console.log("the error is", error)
         // , console.log('Errors')
         // );
-        axios 
+        // if(this.state.cat_selcted){
+        //     axios 
+
+        //     .get(`${domain}/getProductBycolor/${category_id}/${color_id}`)
+        //     .then(response => {
+        //         console.log(response.data.product_details);
+        //         if(response.data.product_details === 'No details are available')
+        //         {
+        //             this.setState({
+        //                 no_products: 'NO PRODUCT FOUND'
+        //             })
+        //         }
+        //         else {
+        //             this.setState({ display: response.data.product_details,
+        //                             no_products: ''    
+        //             });       
+        //         }
+        //         // this.setState({ display: response.data.product_details });
+        //       })
+        //     .catch(error => console.log(error));   
+        //     // this.sortByCatColor(this.state.id_cat,id);       
+        // }
+
+        // else {
+            axios 
 
             .get(`${domain}/getProductBycolor/${id}`)
             .then(response => {
@@ -113,6 +147,7 @@ export class Products extends Component {
                 // this.setState({ display: response.data.product_details });
               })
             .catch(error => console.log(error));
+        // }
 
     }
 
@@ -122,14 +157,52 @@ export class Products extends Component {
         .then(data => this.setState({ display: data.product_details }));
     }
 
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+        this.setState({activePage: pageNumber});
+    }
+
+    handleClick = (event) => {
+        this.setState({
+          currentPage: Number(event.target.id)
+        });
+    }
+
 
     render() {
-        const { display } = this.state;
+        const { display , currentPage, displayPerPage } = this.state;
+
+        const indexOfLastDisplay = currentPage * displayPerPage;
+        const indexOfFirstDisplay = indexOfLastDisplay - displayPerPage;
+        const currentDisplay = display.slice(indexOfFirstDisplay, indexOfLastDisplay);
+
+        const renderDisplay = currentDisplay.map(item=> 
+            <div>{item.product_name}</div>
+            );
+        
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(display.length / displayPerPage); i++) {
+            pageNumbers.push(i);
+        }
+
+        const renderPageNumbers = pageNumbers.map(number => {
+            return (
+              <div
+                key={number}
+                id={number}
+                onClick={this.handleClick}
+                className="pag2"
+              >
+                {number}
+              </div>
+            );
+          });
+
+
         return (
             <div>
                 <Container>
                     <Row>
-
                         <Col xs='3'>
                             <div className="custom-drop"><h6 onClick={this.allProduct} className="p5">All Products</h6></div>
                             <div onClick={this.toggleShow} className="custom-drop"><p className="align-left p5"><i className="material-icons middle-align">expand_more</i>Categories</p></div>
@@ -172,13 +245,13 @@ export class Products extends Component {
                                 </div>
                             }
 
-                            {this.state.no_products === '' && display.map(item=>
+                            {this.state.no_products === '' && currentDisplay.map(item=>
                                 <div className="card2">
                                     <div className="center">
                                         <img className="test" src={`${domain}/${item.product_image}`} />
                                     </div>
                                     <div className="center product_name">
-                                        {item.product_name}
+                                        <Link to={`/productDetail/${item._id}`}>{item.product_name}</Link>
                                     </div>
                                     <div className="center product_cost">
                                         <bold>₹ {item.product_cost}</bold>
@@ -206,9 +279,34 @@ export class Products extends Component {
                                     
                                 </div>
                                 </div>
-                                )}    
+                                )}                               
                             </Row>
                         </Col>
+                        
+                    </Row>
+                    <Row>
+                        <Col xs="5"></Col>
+                        {/* <Col xs="7">
+                            {                
+                                <ul id="pagination">
+                                    {renderPageNumbers}
+                                </ul>
+                            }  */}
+                            <ul>
+                            {pageNumbers.map(number => {
+                                return (
+                                <div
+                                    key={number}
+                                    id={number}
+                                    onClick={this.handleClick}
+                                    className="pag2"
+                                >
+                                    {number}
+                                </div>
+                                );
+                            })}
+                            </ul>
+                        {/* </Col> */}
                     </Row>
                 </Container>
             </div>
