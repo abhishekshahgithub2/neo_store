@@ -478,9 +478,53 @@ html {
 }
 
 .detail-img  {
-  width: 100%;
+  width: 400px;
   height: 250px;
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+.featured-sub-images {
+  width: 100px;
+  height: 50px;
+}
+
+.featured-sub-div {
+  margin: 4%;
+  margin-top: 0%;
+}
+
+.tab-btn {
+  height: 48px;
+  padding: 0 24px;
+  cursor: pointer;
+  box-sizing: border-box;
+  opacity: .6;
+  min-width: 160px;
+  text-align: center;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  position: relative;
+  background: none;
+  border: none;
+}
+
+.tab-active {
+  background: #000;
+  color: #fff;
+}
+
+.features-text {
+  font-size: 15px;
+}
+
+.mb {
+  margin-bottom: 15%;
+}
+
+.pl-10 {
+  padding-left: 5%;
 }
