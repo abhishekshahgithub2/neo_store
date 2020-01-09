@@ -25,7 +25,7 @@ import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 
-const axios = require('axios');
+import axios from 'axios';
 
 
 export class Login extends Component {
@@ -49,21 +49,6 @@ export class Login extends Component {
         }
     }
 
-    
-
-
-
-    // handleEmail = (e) => {
-    //     this.setState({
-    //         email: e.target.value
-    //     })
-    // }
-
-    // handlePassword = (e) => {
-    //     this.setState({
-    //         password: e.target.value
-    //     })
-    // }
 
     handleChange = (e) => {
         this.setState({ [e.target.name] : e.target.value });

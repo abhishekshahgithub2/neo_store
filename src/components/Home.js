@@ -12,7 +12,7 @@ import StarRatings from 'react-star-ratings';
 
 import {domain} from '../urls/url';
 import { Link } from "react-router-dom";
-
+import {connect} from 'react-redux';
 
 export class Home extends Component {
     constructor(props){
@@ -50,7 +50,7 @@ export class Home extends Component {
                                     <bold>₹ {item2.product_cost}</bold>
                                 </div>
                                 <div className="center">
-                                    <button className="card-btn">Add To Cart</button>
+                                    <button className="card-btn" onClick={() => this.props.addToCart(item2)}>Add To Cart</button>
                                 </div>
                                 <div className="center">
                                     {isNaN(item2.product_rating) ? 
@@ -62,7 +62,7 @@ export class Home extends Component {
                                             name='rating'
                                         /> : 
                                         <StarRatings
-                                        rating={parseInt(item2.product_rating)}
+                                        rating={parseFloat(item2.product_rating)}
                                         starRatedColor="rgb(255, 165, 52)"
                                       //   changeRating={this.changeRating}
                                         numberOfStars={5}
@@ -73,61 +73,37 @@ export class Home extends Component {
                                 </div>
                             </div>    
                             )}
+                            {/* <button className="card-btn" onClick={() => this.props.addToCart(item)}>Add To Cart</button> */}
                     </div>
+                    
                 )}
                 </Container>
-
-                {/* <Container>
-                    <Row>
-                        <Col xs="3">
-                            <Card>
-                                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle>Card title</CardTitle>
-                                <CardSubtitle>Card subtitle</CardSubtitle>
-                                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <Button>Add To Cart</Button>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs="3">
-                            <Card>
-                                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle>Card title</CardTitle>
-                                <CardSubtitle>Card subtitle</CardSubtitle>
-                                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <Button>Add To Cart</Button>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs="3">
-                            <Card>
-                                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle>Card title</CardTitle>
-                                <CardSubtitle>Card subtitle</CardSubtitle>
-                                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <Button>Add To Cart</Button>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                        <Col xs="3">
-                            <Card>
-                                <CardImg top width="100%" src="/assets/318x180.svg" alt="Card image cap" />
-                                <CardBody>
-                                <CardTitle>Card title</CardTitle>
-                                <CardSubtitle>Card subtitle</CardSubtitle>
-                                <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <Button>Add To Cart</Button>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row>
-                </Container> */}
             </div>
         )
     }
 }
 
-export default Home
+function mapStateToProps(state){
+    return {
+        items: state.cart
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        addToCart: (item) => {
+            dispatch({
+                type:'ADD_TO_CART',
+                item
+            })
+        },
+        removeFromCart: (index) => {
+            dispatch({
+                type:'REMOVE_FROM_CART',
+                index
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home)

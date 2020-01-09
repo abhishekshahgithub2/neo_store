@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import productDetail from '../components/ProductDetail';
 
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+import {connect} from 'react-redux';
 
 
 export class Products extends Component {
@@ -257,7 +258,7 @@ export class Products extends Component {
                                         <bold>₹ {item.product_cost}</bold>
                                     </div>
                                     <div className="center">
-                                        <button className="card-btn">Add To Cart</button>
+                                        <button className="card-btn" onClick={()=>this.props.addToCart(item)}>Add To Cart</button>
                                     </div>
                                     <div className="center">
                                     {isNaN(item.product_rating) ? 
@@ -269,7 +270,7 @@ export class Products extends Component {
                                             name='rating'
                                         /> : 
                                         <StarRatings
-                                        rating={parseInt(item.product_rating)}
+                                        rating={parseFloat(item.product_rating)}
                                         starRatedColor="rgb(255, 165, 52)"
                                       //   changeRating={this.changeRating}
                                         numberOfStars={5}
@@ -314,4 +315,27 @@ export class Products extends Component {
     }
 }
 
-export default Products
+function mapStateToProps(state){
+    return {
+        cartItems: state.cart
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        addToCart: (item) => {
+            dispatch({
+                type:'ADD_TO_CART',
+                item
+            })
+        },
+        removeFromCart: (index) => {
+            dispatch({
+                type:'REMOVE_FROM_CART',
+                index
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Products)

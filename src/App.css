@@ -528,3 +528,64 @@ html {
 .pl-10 {
   padding-left: 5%;
 }
+
+.social-buttons {
+  width: 50px;
+  height: 50px;
+  margin: 10px 10px 20px;
+  outline: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  border: none;
+}
+
+.test-container {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5%;
+}
+
+.five {
+  width: 5%;
+}
+
+.ten {
+  width: 12%;
+}
+
+.heading1 {
+  border-bottom: 1px solid #000;
+  width:81%;
+}
+
+.emptyCart {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+
+.marg-btm {
+  margin-top: 5%;
+  margin-bottom: 20%; 
+}
+
+.t-shadow {
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}
+
+.mini-image {
+  width: 65px;
+  height: 65px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.width-100 {
+  width: 100%;
+}

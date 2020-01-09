@@ -17,6 +17,10 @@ import {
   TOUCH_ACTIVATION
 } from "react-image-magnifiers";
 
+import { SocialIcon } from 'react-social-icons';
+import ModalExample from './ModalExample';
+
+
 export class ProductDetail extends Component {
 
     constructor(props){
@@ -157,7 +161,7 @@ export class ProductDetail extends Component {
                                                         name='rating'
                                                     /> : 
                                                     <StarRatings
-                                                    rating={parseInt(item.product_rating)}
+                                                    rating={parseFloat(item.product_rating)}
                                                     starRatedColor="rgb(255, 165, 52)"
                                                     //   changeRating={this.changeRating}
                                                     numberOfStars={5}
@@ -180,17 +184,18 @@ export class ProductDetail extends Component {
                                             Share  &nbsp; &nbsp; <img src="https://img.icons8.com/android/24/000000/share.png"></img>
                                         </Row>
                                         <Row>
-                                            <Col xs="2"></Col>
-                                            <Col xs="2"></Col>
-                                            <Col xs="2"></Col>
-                                            <Col xs="2"></Col>
-                                            <Col xs="2"></Col>
+                                            <Col xs="1.5"><button className="social-buttons"><SocialIcon network="facebook" /></button></Col>
+                                            <Col xs="1.5"><button className="social-buttons"><SocialIcon network="google" /></button></Col>
+                                            <Col xs="1.5"><button className="social-buttons"><SocialIcon network="whatsapp" /></button></Col>
+                                            <Col xs="1.5"><button className="social-buttons"><SocialIcon network="pinterest" /></button></Col>
+                                            <Col xs="1.5"><button className="social-buttons"><SocialIcon network="twitter" /></button></Col>
                                             <Col xs="2"></Col>
                                         </Row>
                                         <br/>
                                         <Row>
                                             <Col xs='4'><Button color="danger">Add To Cart</Button></Col>
-                                            <Col xs='8'><Button color="primary">Rate Product</Button></Col>
+                                            {/* <Col xs='8'><Button color="primary">Rate Product</Button></Col> */}
+                                            <Col xs='8'><ModalExample buttonLabel="Rate Product" rate="true"/></Col>
                                         </Row>
                                         <br/>
                                     </Col>

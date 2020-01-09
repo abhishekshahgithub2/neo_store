@@ -11,6 +11,7 @@ import Products from './components/Products';
 import Forgot from './components/Forgot';
 import Logout from './components/Logout';
 import ProductDetail from './components/ProductDetail';
+import Cart from './components/Cart';
 // import Profile from './components/Profile';
 
 import {
@@ -45,7 +46,9 @@ class App extends Component {
                     <Register />
                   </Route>
                   <Route path="/order">
-                    <Order />
+                    
+                    { localStorage.getItem('token') ? <Order /> : <Login /> }
+
                   </Route>
                   <Route path="/products">
                     <Products />
@@ -58,6 +61,9 @@ class App extends Component {
                   </Route>
                   <Route path="/ProductDetail/:id">
                       <ProductDetail />
+                  </Route>
+                  <Route path="/cart">
+                      <Cart />
                   </Route>
                   {/* <Route path="/profile">
                     <Profile />
