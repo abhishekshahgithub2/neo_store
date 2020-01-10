@@ -121,7 +121,7 @@ body {
 }
 
 .inputtop {
-  height: 45px;
+  height: 47px;
   box-sizing: border-box;
   border: 0 solid #ccc;
   border-radius: 4px;
@@ -156,7 +156,7 @@ body {
 #btn1 {
   background-color: #fff;
   border: #fff;
-  margin: 10px;
+  margin: 8px;
   border-radius: 4px;
 }
 
@@ -588,4 +588,16 @@ html {
 
 .width-100 {
   width: 100%;
+}
+
+.button-2 {
+  background-color: #fff;
+  border: #fff;
+  height: 51px;
+  width: 90px;
+  border-radius: 4px;
+}
+
+.status {
+  color: #008000;
 }

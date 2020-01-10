@@ -14,6 +14,9 @@ import {domain} from '../urls/url';
 import { Link } from "react-router-dom";
 import {connect} from 'react-redux';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export class Home extends Component {
     constructor(props){
         super(props);
@@ -28,13 +31,17 @@ export class Home extends Component {
         .then(data => this.setState({ display: data.product_details }));
     }
 
+    notify = () => toast("Product added to cart !");
+    test = (item2) => { this.props.addToCart(item2)  }
+
+
     render() {
         const { display } = this.state;
         return (
             
             <div className="section1">
                 <h3 className="center">Popular Products</h3>
-                <p className="center">View All</p>
+                <p className="center"><Link style={{ color: '#000' }}to="/products">View All</Link></p>
                 <Container>
                 {display.map(item =>
                     <div className="matCard">
@@ -50,7 +57,9 @@ export class Home extends Component {
                                     <bold>₹ {item2.product_cost}</bold>
                                 </div>
                                 <div className="center">
-                                    <button className="card-btn" onClick={() => this.props.addToCart(item2)}>Add To Cart</button>
+                                    {/* <button className="card-btn" onClick={() => this.props.addToCart(item2)}>Add To Cart</button> */}
+                                    <button className="card-btn" onClick={()=>this.test(item2)}>Add To Cart</button>
+                                    <ToastContainer />
                                 </div>
                                 <div className="center">
                                     {isNaN(item2.product_rating) ? 
@@ -77,6 +86,7 @@ export class Home extends Component {
                     </div>
                     
                 )}
+                {/* { this.props.items.map(item=>console.log(item.product_id)) } */}
                 </Container>
             </div>
         )

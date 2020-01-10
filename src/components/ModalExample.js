@@ -79,16 +79,6 @@ export class ModalExample extends Component {
         formData.append('product_id', id); 
         formData.append('product_rating', this.state.rating);
 
-        // { headers: {"Authorization" : `Bearer ${localStorage.getItem('token')}`} }
-        
-        // axios.put(`${domain}/updateProductRatingProdId`, formData, config)
-        //     .then(response => {
-        //         console.log(response);
-        //     })
-        //     .catch(error => {
-        //         console.log(error);
-        //     });
-
         this.setState({
             modal: !this.state.modal
         })
@@ -184,7 +174,7 @@ export class ModalExample extends Component {
                             /> : ''
                         } */}
                         {
-                            this.props.rate ? <Button onClick={this.submitRating} disabled={ this.state.rating !== 0 ? false : true}> Done </Button> :
+                            this.props.rate ? <Button onClick={this.submitRating} disabled={ localStorage.getItem('token') && this.state.rating !== 0 ? false : true}> Done </Button> :
                             <Button color="primary" onClick={this.handleSubmit} disabled={ this.state.email.length > 0 ? false : true }>Submit</Button>
                         }
                     </ModalFooter>

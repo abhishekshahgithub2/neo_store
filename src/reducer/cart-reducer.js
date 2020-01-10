@@ -8,9 +8,15 @@ const cartReducer = (state=initialState,action) => {
     switch(action.type){
         case 'ADD_TO_CART': {
             let cart = [...state.cart, action.item]
-            console.log(cart);
+            // const test = cart.filter(function(items) {
+            //     return items.product_id !== action.item.product_id;
+            //   });
+            // cart = test;
+            // cart.filter(items=> items.product_id !== action.item.product_id);
+            // cart.map(items=>console.log('Each' +items.product_id, 'Current' + action.item.product_id));
+            // let cart = [...state.cart, action.item]
+            alert("Added to cart")
             localStorage.setItem('cart',JSON.stringify(cart));
-            JSON.parse(localStorage.getItem('cart'))
             return {
                 ...state,
                 cart

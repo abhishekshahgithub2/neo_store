@@ -19,6 +19,7 @@ import {
 
 import { SocialIcon } from 'react-social-icons';
 import ModalExample from './ModalExample';
+import {connect} from 'react-redux';
 
 
 export class ProductDetail extends Component {
@@ -193,7 +194,7 @@ export class ProductDetail extends Component {
                                         </Row>
                                         <br/>
                                         <Row>
-                                            <Col xs='4'><Button color="danger">Add To Cart</Button></Col>
+                                            <Col xs='4'><Button color="danger" onClick={() => this.props.addToCart(item)}>Add To Cart</Button></Col>
                                             {/* <Col xs='8'><Button color="primary">Rate Product</Button></Col> */}
                                             <Col xs='8'><ModalExample buttonLabel="Rate Product" rate="true"/></Col>
                                         </Row>
@@ -232,4 +233,27 @@ export class ProductDetail extends Component {
     }
 }
 
-export default ProductDetail
+function mapStateToProps(state){
+    return {
+        cartItems: state.cart
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return {
+        addToCart: (item) => {
+            dispatch({
+                type:'ADD_TO_CART',
+                item
+            })
+        },
+        removeFromCart: (index) => {
+            dispatch({
+                type:'REMOVE_FROM_CART',
+                index
+            })
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(ProductDetail)

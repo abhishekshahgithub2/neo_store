@@ -18,16 +18,29 @@ import { CardHeader, CardFooter, CardBody,
 
 
 export class Cart extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            SubTotal: 0,
+            Gst: 0,
+            OrderTotal: 0
+        }
+    }
+
+    proceedBuy = () => {
+        // alert('Please Login First');
+    }
+
     render() {
-        const renderCart = this.props.items.map((item,index) => 
-            <div>
-                 {item.product_cost}
-                 {item.product_name}
-                 by {item.product_producer}
-                 {item.product_stock > 0 ? 'In Stock' : '' }
-                 <button onClick={()=>this.props.removeFromCart(index)}>Delete</button>
-            </div>
-            )  
+        // const renderCart = this.props.items.map((item,index) => 
+        //     <div>
+        //          {item.product_cost}
+        //          {item.product_name}
+        //          by {item.product_producer}
+        //          {item.product_stock > 0 ? 'In Stock' : '' }
+        //          <button onClick={()=>this.props.removeFromCart(index)}>Delete</button>
+        //     </div>
+        //     )  
             
 
         return (
@@ -59,14 +72,14 @@ export class Cart extends Component {
                                 <thead>
                                     <tr>
                                     <th>Product</th>
-                                    <th>Quantity</th>
+                                    {/* <th>Quantity</th> */}
                                     <th>Price</th>
-                                    <th>Total</th>
+                                    {/* <th>Total</th> */}
                                     <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {this.props.items.map((item,index) => 
+                                { this.props.items.map((item,index) => 
 
                                     <tr>
                                         <td>
@@ -79,25 +92,26 @@ export class Cart extends Component {
                                                 <Col xs='9'>
                                                     <div>{item.product_name}</div>
                                                     <div>by {item.product_producer}</div>
-                                                    <div> Status: {item.product_stock > 0 ? 'In Stock' : '' }</div>
+                                                    <div> Status: <span className="status">{item.product_stock > 0 ? 'In Stock' : '' }</span></div>
                                                 </Col>
                                             </Row>
                                         </td>
-                                        <td>
+                                        {/* <td>
                                             Quantity
-                                        </td>
+                                        </td> */}
                                         <td>
                                             {item.product_cost}
                                         </td>
-                                        <td>
-                                            {item.product_cost}
-                                        </td>
+                                        {/* <td>
+                                            Total
+                                        </td> */}
                                         <td>
                                             <button onClick={()=>this.props.removeFromCart(index)}><i class="fa fa-trash" aria-hidden="true"></i></button>
                                         </td>
                                         
                                     </tr>
                                     )}
+                                    {/* { this.props.items.map(item=>console.log(item.product_id)) } */}
                                 </tbody>
                                 </Table> 
                         </Col>
@@ -105,10 +119,11 @@ export class Cart extends Component {
                             <Card>
                                 <CardHeader className="center">Review Order</CardHeader>
                                 <CardBody>
-                                    <div>SubTotal</div><hr/>
-                                    <div>GST</div><hr/>
-                                    <div>Order Total</div><hr/>
-                                    <Button color="primary width-100">Proceed To Buy</Button>
+                                    <div>SubTotal: { this.props.items.reduce((accu,curr)=>{ return accu += curr.product_cost },0) }</div><hr/>
+                                    <div>GST (5%): { this.props.items.reduce((accu,curr)=>{ return accu = accu + curr.product_cost * 0.05 },0) }</div><hr/>
+                                    <div>Order Total: { this.props.items.reduce((accu,curr)=>{ return accu = accu + curr.product_cost + curr.product_cost * 0.05 },0) } </div><hr/>
+                                    <Button onClick={this.proceedBuy} color="primary width-100">{ localStorage.getItem('token') ? 'Proceed To Buy' :<Link to="/login" style={{ color: '#000' }}>Proceed To Buy</Link> }</Button>
+
                                 </CardBody>
                             </Card>
                         </Col>
