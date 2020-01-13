@@ -220,7 +220,7 @@ export class Products extends Component {
                             <Row>
                                 
                                     { this.state.showColor && this.state.colors.map(item => 
-                                    <Col xs='4'> 
+                                    <Col xs='4' className="color-center"> 
                                         <div>
                                              <button onClick={() => this.sortByColor(item._id)} style={{ backgroundColor: item.color_name }} className="color-btn">  </button>
                                         </div>

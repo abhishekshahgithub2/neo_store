@@ -9,12 +9,12 @@ import {
 import '../App.css';
 import ProfileCard from './ProfileCard';
 
-export class Order extends Component {
+export class Address extends Component {
     constructor(props){
         super(props);
         this.state = {
             url_id: '',
-            orders: []
+            address: []
         }
     }
 
@@ -31,13 +31,11 @@ export class Order extends Component {
             headers: { 'Authorization' : `${localStorage.getItem('token')}`,'Accept': 'application/json' }
         }
         
-        axios.get(`${domain}/getOrderDetails`,{ headers: {"Authorization" : `${localStorage.getItem('token')}`} })
-            // .then(response => console.log(response.data.product_details))
-            .then(response => this.setState({orders: response.data.product_details}))
-
-
+        axios.get(`${domain}/getCustAddress`,{ headers: {"Authorization" : `${localStorage.getItem('token')}`} })
+            // .then(response => console.log(response.data.customer_address))
+            .then(response => this.setState({address: response.data.customer_address}))
     }
-
+    
     render() {
         return (
             <div>
@@ -48,14 +46,21 @@ export class Order extends Component {
                         <Col xs='4'>
                             <ProfileCard url_id={this.state.url_id}/>
                         </Col>
-                        <Col xs='8'>
-                            <h4>Profile</h4>
+                        <Col xs='8' className="prof-box">
+                            <h4>Addresses</h4>
                             <hr/>
-                            <Row>
-                                {/* {this.state.orders.map((item,index)=>
-                                <div key={index}>{item}</div>
-                                )} */}
-                            </Row>
+                                {this.state.address.map((item,index)=>  
+                                    <div key={index}>
+                                        <Row>
+                                            <Col xs='12' className="prof-mini">
+                                                <div>{item.address}</div> 
+                                                <div>{item.city} {item.pincode} </div> 
+                                                <div>{item.country}</div>
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                )}
+                                <button>Add Address</button>
                         </Col>
                     </Row>
                 </Container>
@@ -64,4 +69,4 @@ export class Order extends Component {
     }
 }
 
-export default Order
+export default Address

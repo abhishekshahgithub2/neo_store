@@ -23,12 +23,32 @@ export class Cart extends Component {
         this.state = {
             SubTotal: 0,
             Gst: 0,
-            OrderTotal: 0
+            OrderTotal: 0,
+            quantity: 1
         }
     }
 
     proceedBuy = () => {
         // alert('Please Login First');
+    }
+
+    incQuantity = () => {
+        if(this.state.quantity === 9){
+            alert("Maximum limit reached");
+        }
+        if(this.state.quantity < 9){
+            this.setState({
+                quantity: this.state.quantity + 1
+            })
+        }
+    }
+
+    decQuantity = () => {
+        if(this.state.quantity > 1) {
+            this.setState({
+                quantity: this.state.quantity - 1
+            })
+        }
     }
 
     render() {
@@ -72,7 +92,7 @@ export class Cart extends Component {
                                 <thead>
                                     <tr>
                                     <th>Product</th>
-                                    {/* <th>Quantity</th> */}
+                                    <th>Quantity</th>
                                     <th>Price</th>
                                     {/* <th>Total</th> */}
                                     <th></th>
@@ -96,9 +116,13 @@ export class Cart extends Component {
                                                 </Col>
                                             </Row>
                                         </td>
-                                        {/* <td>
-                                            Quantity
-                                        </td> */}
+                                        <td>
+                                            <div className="counter_qty">
+                                                <button className="qty_btn" onClick={this.incQuantity}>+</button>
+                                                    &nbsp; <span className="instance">{this.state.quantity}</span> &nbsp;
+                                                <button className="qty_btn" onClick={this.decQuantity}>-</button>
+                                            </div>
+                                        </td>
                                         <td>
                                             {item.product_cost}
                                         </td>
@@ -119,9 +143,9 @@ export class Cart extends Component {
                             <Card>
                                 <CardHeader className="center">Review Order</CardHeader>
                                 <CardBody>
-                                    <div>SubTotal: { this.props.items.reduce((accu,curr)=>{ return accu += curr.product_cost },0) }</div><hr/>
-                                    <div>GST (5%): { this.props.items.reduce((accu,curr)=>{ return accu = accu + curr.product_cost * 0.05 },0) }</div><hr/>
-                                    <div>Order Total: { this.props.items.reduce((accu,curr)=>{ return accu = accu + curr.product_cost + curr.product_cost * 0.05 },0) } </div><hr/>
+                                    <div>SubTotal: { this.props.items.reduce((accu,curr)=>{ return accu += curr.product_cost * this.state.quantity },0) }</div><hr/>
+                                    <div>GST (5%): { this.props.items.reduce((accu,curr)=>{ return accu = accu + curr.product_cost * 0.05 * this.state.quantity },0) }</div><hr/>
+                                    <div>Order Total: { this.props.items.reduce((accu,curr)=>{ return accu = (accu + curr.product_cost + curr.product_cost * 0.05) * this.state.quantity },0) } </div><hr/>
                                     <Button onClick={this.proceedBuy} color="primary width-100">{ localStorage.getItem('token') ? 'Proceed To Buy' :<Link to="/login" style={{ color: '#000' }}>Proceed To Buy</Link> }</Button>
 
                                 </CardBody>

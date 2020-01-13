@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {connect} from 'react-redux';
+import {domain} from '../urls/url';
+import axios from 'axios';
 
 // import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
@@ -30,10 +32,22 @@ export class Header extends Component {
         this.state = {
             clicked: false,
             dropdownOpen: false,
-            search: ''
+            search: '',
+            profile_img: ''
         }
     }
-      
+
+    componentDidMount(){
+        const config = {     
+            headers: { 'Authorization' : `${localStorage.getItem('token')}`,'Accept': 'application/json' }
+        }
+
+        axios.get(`${domain}/getCustProfile`,{ headers: {"Authorization" : `${localStorage.getItem('token')}`} })
+        .then(response => this.setState({
+            image: response.data.customer_proile.profile_img
+        }))
+
+    }
 
     handleClick = () => {
         this.setState({
@@ -97,7 +111,7 @@ export class Header extends Component {
                     </button> */}
                     <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.setOpen}>
                         <DropdownToggle className="drop" >
-                            <button className="button-2" onClick={this.handleClick}><i className="material-icons">account_box</i>
+                            <button className="button-2" onClick={this.handleClick}> { localStorage.getItem('token') ? <img className="header-profile" src={`${domain}/${this.state.image}`} /> : <i className="material-icons">account_box</i> } 
                                 <button className="expandmore" >
                                     <i className="material-icons">expand_more</i>
                                 </button>

@@ -12,7 +12,9 @@ import Forgot from './components/Forgot';
 import Logout from './components/Logout';
 import ProductDetail from './components/ProductDetail';
 import Cart from './components/Cart';
-// import Profile from './components/Profile';
+import Profile from './components/Profile';
+import Address from './components/Address';
+import ChangePassword from './components/ChangePassword';
 
 import {
   BrowserRouter as Router,
@@ -65,9 +67,15 @@ class App extends Component {
                   <Route path="/cart">
                       <Cart />
                   </Route>
-                  {/* <Route path="/profile">
+                  <Route path="/profile">
                     <Profile />
-                  </Route> */}
+                  </Route>
+                  <Route path="/address">
+                    <Address />
+                  </Route>
+                  <Route path="/changepassword">
+                    <ChangePassword />
+                  </Route>
                 </Switch>
               <Footer/>
             </div>

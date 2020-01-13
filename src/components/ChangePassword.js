@@ -9,12 +9,11 @@ import {
 import '../App.css';
 import ProfileCard from './ProfileCard';
 
-export class Order extends Component {
+export class ChangePassword extends Component {
     constructor(props){
         super(props);
         this.state = {
-            url_id: '',
-            orders: []
+            url_id: ''
         }
     }
 
@@ -26,16 +25,6 @@ export class Order extends Component {
         this.setState({
             url_id: id_url
         })
-
-        const config = {     
-            headers: { 'Authorization' : `${localStorage.getItem('token')}`,'Accept': 'application/json' }
-        }
-        
-        axios.get(`${domain}/getOrderDetails`,{ headers: {"Authorization" : `${localStorage.getItem('token')}`} })
-            // .then(response => console.log(response.data.product_details))
-            .then(response => this.setState({orders: response.data.product_details}))
-
-
     }
 
     render() {
@@ -52,9 +41,7 @@ export class Order extends Component {
                             <h4>Profile</h4>
                             <hr/>
                             <Row>
-                                {/* {this.state.orders.map((item,index)=>
-                                <div key={index}>{item}</div>
-                                )} */}
+                                Change Password
                             </Row>
                         </Col>
                     </Row>
@@ -64,4 +51,4 @@ export class Order extends Component {
     }
 }
 
-export default Order
+export default ChangePassword
