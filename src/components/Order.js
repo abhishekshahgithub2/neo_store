@@ -14,7 +14,8 @@ export class Order extends Component {
         super(props);
         this.state = {
             url_id: '',
-            orders: []
+            orders: [],
+            receipt: ''
         }
     }
 
@@ -38,24 +39,66 @@ export class Order extends Component {
 
     }
 
+    next = () => {
+        window.open(`${domain}/${this.state.receipt}`, '_blank');
+        window.location.reload(true);
+    }
+
+    invoice = (item,itemId) => {
+        // console.log(itemId);
+
+        axios.post(`${domain}/getInvoiceOfOrder`, item ,{ headers: {"Authorization" : `${localStorage.getItem('token')}`} })
+        // .then(response => console.log(response.data.product_details))
+        // .then(response => console.log(response.data.receipt))
+        .then(response =>  this.setState({receipt: response.data.receipt}))
+
+        // .then(window.open(`${domain}/${this.state.receipt}`, '_blank'))
+        // .then(window.location.reload(true))
+        // .then(this.next());
+    }
+
+
+
     render() {
         return (
             <div>
                 <Container>
-                    <Row>My Account</Row>
+                    <Row>My Account {this.state.receipt !== '' ? this.next() :'' }</Row>
                     <hr/>
                     <Row>
                         <Col xs='4'>
                             <ProfileCard url_id={this.state.url_id}/>
                         </Col>
                         <Col xs='8'>
-                            <h4>Profile</h4>
+                            <h4>Orders</h4>
                             <hr/>
-                            <Row>
-                                {/* {this.state.orders.map((item,index)=>
-                                <div key={index}>{item}</div>
-                                )} */}
-                            </Row>
+                                { console.log(this.state.orders)}
+                                {
+                                    this.state.orders.map(item => 
+                                        <div>
+                                            <Container className="orders-box">
+                                                <Row>
+                                                    <span className="transit">TRANSIT &nbsp;</span> Order By : {item._id}
+                                                </Row>
+                                                <Row>
+                                                    Placed On: <span className="date">{item.product_details[0].createdAt}</span> / <span className="status"> &nbsp;₹ {item.product_details[0].total_cartCost} </span>  
+                                                </Row>
+                                                <hr/>
+                                                <Row>
+                                                    {item.product_details.map((item2,index2)=>
+                                                        <div> 
+                                                            <div>{item2.product_details.map((item3,index)=>
+                                                                <div>{<img className="test" src={`${domain}/${item3.product_image}`} />}</div>
+                                                            )}</div>
+                                                        </div>
+                                                    )}
+                                                </Row>
+                                                <hr/>
+                                                <Button color="primary" onClick={()=>this.invoice(item,item._id)}>Download Invoice as PDF</Button>
+                                            </Container>
+                                        </div>
+                                        )
+                                }
                         </Col>
                     </Row>
                 </Container>
