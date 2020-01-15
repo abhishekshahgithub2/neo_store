@@ -15,6 +15,8 @@ import Cart from './components/Cart';
 import Profile from './components/Profile';
 import Address from './components/Address';
 import ChangePassword from './components/ChangePassword';
+import AddAddress from './components/AddAdress';
+import EditAddress from './components/EditAddress';
 
 import {
   BrowserRouter as Router,
@@ -75,6 +77,12 @@ class App extends Component {
                   </Route>
                   <Route path="/changepassword">
                     <ChangePassword />
+                  </Route>
+                  <Route path="/addaddress">
+                    <AddAddress />
+                  </Route>
+                  <Route path="/editaddress/:id">
+                      <EditAddress />
                   </Route>
                 </Switch>
               <Footer/>
