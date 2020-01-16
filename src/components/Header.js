@@ -13,6 +13,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import {connect} from 'react-redux';
 import {domain} from '../urls/url';
 import axios from 'axios';
+import defProfile from "../assets/images/profile-placeholder.png";
 
 // import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
@@ -111,7 +112,7 @@ export class Header extends Component {
                     </button> */}
                     <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.setOpen}>
                         <DropdownToggle className="drop" >
-                            <button className="button-2" onClick={this.handleClick}> { localStorage.getItem('token') ? <img className="header-profile" src={`${domain}/${this.state.image}`} /> : <i className="material-icons">account_box</i> } 
+                            <button className="button-2" onClick={this.handleClick}> { localStorage.getItem('token') ? <img className="header-profile" src={this.state.image ? `${domain}/${this.state.image}` : defProfile }/> : <i className="material-icons">account_box</i> } 
                                 <button className="expandmore" >
                                     <i className="material-icons">expand_more</i>
                                 </button>

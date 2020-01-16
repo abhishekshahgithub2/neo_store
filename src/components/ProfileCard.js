@@ -8,6 +8,7 @@ import {
   } from 'reactstrap';
 import '../App.css';
 import { Link } from "react-router-dom";
+import defProfile from "../assets/images/profile-placeholder.png";
 
 export class ProfileCard extends Component {
     constructor(props){
@@ -34,7 +35,12 @@ export class ProfileCard extends Component {
     render() {
         return (
             <div>
-                <img className="profile-pic-card" src={`${domain}/${this.state.image}`} />
+                { this.state.image ? 
+                    <img className="profile-pic-card" src={`${domain}/${this.state.image}`} /> 
+                        : 
+                    <img className="profile-pic-card" src={defProfile} /> 
+                }
+                
                 <h5 className="center">{this.state.first_name}</h5>
                 {/* {this.props.url_id} */}
                 <Link to="/order"><button className={this.props.url_id === 'order' ? 'profile-pic-btn active' : 'profile-pic-btn'}>Order</button></Link> <br/>

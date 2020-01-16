@@ -65,7 +65,7 @@ export class ChangePassword extends Component {
                         <Col xs='4'>
                             <ProfileCard url_id={this.state.url_id}/>
                         </Col>
-                        <Col xs='8'>
+                        <Col xs='8' className="prof-box">
                             <h4>Change Password</h4>
                             <hr/>
 
@@ -121,8 +121,7 @@ export class ChangePassword extends Component {
                                             <ErrorMessage name="confirmPass" component="div" className="invalid-feedback" />
                                         </div>
                                         <div className="form-group">
-                                            <button type="submit" className="btn btn-primary mr-2">Register</button>
-                                            <button type="reset" className="btn btn-secondary">Reset</button>
+                                            <button type="submit" className="btn btn-primary mr-2">Change Password</button>
                                         </div>
                                     </Form>
                                 )}

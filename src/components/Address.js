@@ -198,8 +198,8 @@ export class Address extends Component {
                                                     <div>{item.pincode}</div>
                                                     <div>{item.country}</div>
                                                     <div>{item.state}</div>
-                                                    <Button onClick={()=>this.deleteAddress(item.address_id)}>Delete</Button>
-                                                    <Button onClick={()=>this.editable(item.address_id,item.address,item.city,item.pincode,item.country,item.state)} color="primary">Edit</Button>
+                                                    <Button className="m-2" onClick={()=>this.deleteAddress(item.address_id)}>Delete</Button>
+                                                    <Button className="m-2" onClick={()=>this.editable(item.address_id,item.address,item.city,item.pincode,item.country,item.state)} color="primary">Edit</Button>
                                                 </Col>
                                             </Row>
                                         </div>
