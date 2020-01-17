@@ -30,7 +30,9 @@ export class Products extends Component {
             cat_selcted: false,
             id_cat:'',
             currentPage: 1,
-            displayPerPage: 9
+            displayPerPage: 9,
+            show: true,
+            searchDisplay: []
         };
     }
 
@@ -46,6 +48,19 @@ export class Products extends Component {
         fetch(`${domain}/getAllColors`)
         .then( response => response.json())
         .then(data => this.setState({ colors: data.color_details}));
+
+        // let url = window.location.href;
+        // let id_url = url.substring(url.lastIndexOf('/') + 1);
+        // if(id_url !== 'products'){
+        //     this.setState({
+        //         show: !this.state.show
+        //     })
+        // }
+        // else {
+        //     this.setState({
+        //         show:
+        //     })
+        // }
 
     }
 
@@ -205,7 +220,7 @@ export class Products extends Component {
                 <Container>
                     <Row>
                         <Col xs='3'>
-                            <div className="custom-drop"><h6 onClick={this.allProduct} className="p5">All Products</h6></div>
+                            <div className="custom-drop" onClick={this.allProduct}><h6 className="p5">All Products</h6></div>
                             <div onClick={this.toggleShow} className="custom-drop"><p className="align-left p5"><i className="material-icons middle-align">expand_more</i>Categories</p></div>
                                 <div>
                                     { this.state.show && this.state.categories.map(item => <div>
@@ -246,7 +261,7 @@ export class Products extends Component {
                                 </div>
                             }
 
-                            {this.state.no_products === '' && currentDisplay.map(item=>
+                            { this.state.no_products === '' && currentDisplay.map(item=>
                                 <div className="card2">
                                     <div className="center">
                                         <img className="test" src={`${domain}/${item.product_image}`} />
@@ -280,7 +295,10 @@ export class Products extends Component {
                                     
                                 </div>
                                 </div>
-                                )}                               
+                                )}
+
+                                {/* { this.state.show === false && <div>Searched Products</div>} */}
+
                             </Row>
                         </Col>
                         

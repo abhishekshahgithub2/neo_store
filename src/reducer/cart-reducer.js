@@ -1,7 +1,8 @@
 
 const initialState = {
 
-    cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [] 
+    cart: localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [] ,
+    inputValue: ''
 }
 
 const cartReducer = (state=initialState,action) => {
@@ -30,6 +31,9 @@ const cartReducer = (state=initialState,action) => {
                 ...state,
                 cart
             }
+        }
+        case 'INPUT_CHANGE': {
+            return Object.assign({},state,{inputValue: action.text });
         }
         default: {
             return state

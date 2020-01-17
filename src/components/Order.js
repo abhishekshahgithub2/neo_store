@@ -72,8 +72,7 @@ export class Order extends Component {
                         <Col xs='8'>
                             <h4>Orders</h4>
                             <hr/>
-                                { console.log(this.state.orders)}
-                                {
+                                {this.state.orders.length > 0 ? 
                                     this.state.orders.map(item => 
                                         <div>
                                             <Container className="orders-box">
@@ -98,7 +97,35 @@ export class Order extends Component {
                                             </Container>
                                         </div>
                                         )
+                                    :
+                                    'EMPTY'
                                 }
+                                {/* {
+                                    this.state.orders.map(item => 
+                                        <div>
+                                            <Container className="orders-box">
+                                                <Row>
+                                                    <span className="transit">TRANSIT &nbsp;</span> Order By : {item._id}
+                                                </Row>
+                                                <Row>
+                                                    Placed On: <span className="date">{item.product_details[0].createdAt}</span> / <span className="status"> &nbsp;₹ {item.product_details[0].total_cartCost} </span>  
+                                                </Row>
+                                                <hr/>
+                                                <Row>
+                                                    {item.product_details.map((item2,index2)=>
+                                                        <div> 
+                                                            <div>{item2.product_details.map((item3,index)=>
+                                                                <div>{<img className="test" src={`${domain}/${item3.product_image}`} />}</div>
+                                                            )}</div>
+                                                        </div>
+                                                    )}
+                                                </Row>
+                                                <hr/>
+                                                <Button color="primary" onClick={()=>this.invoice(item,item._id)}>Download Invoice as PDF</Button>
+                                            </Container>
+                                        </div>
+                                        )
+                                } */}
                         </Col>
                     </Row>
                 </Container>

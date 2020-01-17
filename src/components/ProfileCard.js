@@ -41,7 +41,7 @@ export class ProfileCard extends Component {
                     <img className="profile-pic-card" src={defProfile} /> 
                 }
                 
-                <h5 className="center">{this.state.first_name}</h5>
+                <h5 className="center m4">{this.state.first_name}</h5>
                 {/* {this.props.url_id} */}
                 <Link to="/order"><button className={this.props.url_id === 'order' ? 'profile-pic-btn active' : 'profile-pic-btn'}>Order</button></Link> <br/>
                 <Link to="/profile"><button className={this.props.url_id === 'profile' ? 'profile-pic-btn active' : 'profile-pic-btn'}>Profile</button></Link> <br/>

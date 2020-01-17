@@ -40,7 +40,7 @@ export class Home extends Component {
         return (
             
             <div className="section1">
-                <h3 className="center">Popular Products</h3>
+                <h3 className="center">Popular Products {this.props.inputValue} </h3>
                 <p className="center"><Link style={{ color: '#000' }}to="/products">View All</Link></p>
                 <Container>
                 {display.map(item =>
@@ -95,7 +95,8 @@ export class Home extends Component {
 
 function mapStateToProps(state){
     return {
-        items: state.cart
+        items: state.cart,
+        inputValue: state.inputValue
     }
 }
 

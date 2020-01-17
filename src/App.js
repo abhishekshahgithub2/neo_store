@@ -17,6 +17,7 @@ import Address from './components/Address';
 import ChangePassword from './components/ChangePassword';
 import AddAddress from './components/AddAdress';
 import EditAddress from './components/EditAddress';
+import Product from './components/Product';
 
 import {
   BrowserRouter as Router,
@@ -27,21 +28,29 @@ import {
 
 
 class App extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      searchText: ''
+    }
+  }
+
+  handleSearch = (Stext) => {
+    this.setState({
+      searchText: Stext
+    })
+  }
+
   render() {
     return (
-      // <div>
-      //   <Header />
-      //   <Democarousel />
-      //   <Home />
-      //   <Footer />
-      // </div>
           <Router>
             <div>      
-              <Header/>
+              <Header handleSearch={this.handleSearch}/>
                 <Switch>
                   <Route exact path="/">
                     <Democarousel />
-                    <Home />
+                    <Home test={this.state.searchText}/>
                   </Route>
                   <Route path="/login">
                     <Login/>
@@ -83,6 +92,9 @@ class App extends Component {
                   </Route>
                   <Route path="/editaddress/:id">
                       <EditAddress />
+                  </Route>
+                  <Route path="/product">
+                      <Product />
                   </Route>
                 </Switch>
               <Footer/>

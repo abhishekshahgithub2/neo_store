@@ -68,6 +68,27 @@ export class Header extends Component {
         // window.location.reload();
     }
 
+    search = (e) => {
+        this.setState({
+            search: e.target.value
+        })
+        console.log(this.state.search);
+    }
+
+    keyPressed = (event) => {
+        if (event.key === "Enter") {
+        //   this.submitMessage()
+        // console.log("Enter Pressed  " + event.target.value)
+        console.log('Enter Key pressed' + event.target.value);
+        window.location = `/product/${event.target.value}`;
+        // this.props.inputChanged('tester');
+        }
+      }
+
+    // handleNew = (e) => {
+    //     () => this.props.handleChange(e.target.value)
+    // }
+
     render() {
         return (
             <div className="topbar">
@@ -80,7 +101,11 @@ export class Header extends Component {
                         <button id="navBtn"><Link to="/order" style={{ color: '#FFF' }}>Order</Link></button>
                     </span>
 
-                    <input id="search" placeholder="Search..." type="text" autoComplete="off" className="inputtop"/>
+                    {/* <input id="search" placeholder="Search..." type="text" autoComplete="off" value={this.props.inputValue} onKeyPress={this.keyPressed} onChange={this.props.inputChanged} className="inputtop"/> */}
+
+                    <input id="search" placeholder="Search..." type="text" autoComplete="off" value={this.state.search} onKeyPress={this.keyPressed} onChange={this.search} className="inputtop"/>
+
+
                     {/* <Autocomplete
                         className="inputtop"
                         options={top100Films}
@@ -134,8 +159,18 @@ export class Header extends Component {
 
 function mapStateToProps(state){
     return {
-        items: state.cart
+        items: state.cart,
+        inputValue: state.inputValue
     }
 }
 
-export default connect(mapStateToProps)(Header)
+function mapDispatchToProps(dispatch){
+    return {
+        inputChanged: (e) => {
+            const action = { type:'INPUT_CHANGE' , text: e.target.value };
+            dispatch(action);
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header)
