@@ -25,8 +25,11 @@ const cartReducer = (state=initialState,action) => {
         }
         case 'REMOVE_FROM_CART': {
             let cart = [...state.cart]
-            cart.splice(action.index,1)
-            localStorage.setItem('cart',JSON.stringify(cart));
+            if (window.confirm('Are you sure you wish to delete this item?')){
+                cart.splice(action.index,1)
+                localStorage.setItem('cart',JSON.stringify(cart));
+            }
+
             return {
                 ...state,
                 cart

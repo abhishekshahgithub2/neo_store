@@ -193,12 +193,14 @@ export class Profile extends Component {
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="dob">Date of Birth &nbsp; </label>
-                                        <input name="dob" type="date" value={this.state.dob} onChange={this.handleChange}/>
+                                        <input name="dob" type="date" value={this.state.dob} onChange={this.handleChange}
+                                        min="1900-01-01" max="2018-12-31"
+                                        />
                                         {/* <Field name="dob" type="text" className={'form-control' + (errors.dob && touched.dob ? ' is-invalid' : '')} /> */}
                                         <ErrorMessage name="dob" component="div" className="invalid-feedback" />
                                     </div>
                                     <div className="m-5-topbtm">
-                                        <input type="file" name="file" onChange={this.onChange} />
+                                        Upload profile Image: <input type="file" name="file" onChange={this.onChange} />
                                     </div>
                                     <div className="form-group">
                                         <button type="submit" className="btn btn-primary mr-2">Edit Profile</button>

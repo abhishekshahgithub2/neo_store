@@ -8,6 +8,8 @@ import {
   } from 'reactstrap';
 import '../App.css';
 import ProfileCard from './ProfileCard';
+import Moment from 'react-moment';
+var moment = require('moment');
 
 export class Order extends Component {
     constructor(props){
@@ -80,7 +82,10 @@ export class Order extends Component {
                                                     <span className="transit">TRANSIT &nbsp;</span> Order By : {item._id}
                                                 </Row>
                                                 <Row>
-                                                    Placed On: <span className="date">{item.product_details[0].createdAt}</span> / <span className="status"> &nbsp;₹ {item.product_details[0].total_cartCost} </span>  
+                                                    Placed On: <span className="date">
+                                                        {/* <Moment parse="YYYY-MM-DD">{item.product_details[0].createdAt} </Moment> */}
+                                                        &nbsp; {moment(item.product_details[0].createdAt).format('L') }
+                                                        </span> &nbsp; / <span className="status"> &nbsp;₹ {item.product_details[0].total_cartCost} </span>  
                                                 </Row>
                                                 <hr/>
                                                 <Row>

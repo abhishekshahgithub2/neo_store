@@ -80,7 +80,7 @@ export class Header extends Component {
         //   this.submitMessage()
         // console.log("Enter Pressed  " + event.target.value)
         console.log('Enter Key pressed' + event.target.value);
-        window.location = `/product/${event.target.value}`;
+        window.location = `/products/${event.target.value}`;
         // this.props.inputChanged('tester');
         }
       }
@@ -137,7 +137,7 @@ export class Header extends Component {
                     </button> */}
                     <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.setOpen}>
                         <DropdownToggle className="drop" >
-                            <button className="button-2" onClick={this.handleClick}> { localStorage.getItem('token') ? <img className="header-profile" src={this.state.image ? `${domain}/${this.state.image}` : defProfile }/> : <i className="material-icons">account_box</i> } 
+                            <button className="button-2" onClick={this.handleClick}> { localStorage.getItem('token') ? <img className="header-profile" src={this.state.image ? `${domain}/${this.state.image}` : defProfile }/> : <i className="material-icons header-profile-off">account_box</i> } 
                                 <button className="expandmore" >
                                     <i className="material-icons">expand_more</i>
                                 </button>

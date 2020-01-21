@@ -14,6 +14,7 @@ import productDetail from '../components/ProductDetail';
 
 import { ButtonDropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
 import {connect} from 'react-redux';
+import ReactTooltip from 'react-tooltip';
 
 
 export class Products extends Component {
@@ -31,8 +32,9 @@ export class Products extends Component {
             id_cat:'',
             currentPage: 1,
             displayPerPage: 9,
-            show: true,
-            searchDisplay: []
+            searchDisplay: [],
+            testArray: [],
+            currentCategory: ''
         };
     }
 
@@ -49,18 +51,36 @@ export class Products extends Component {
         .then( response => response.json())
         .then(data => this.setState({ colors: data.color_details}));
 
-        // let url = window.location.href;
-        // let id_url = url.substring(url.lastIndexOf('/') + 1);
-        // if(id_url !== 'products'){
-        //     this.setState({
-        //         show: !this.state.show
-        //     })
-        // }
-        // else {
-        //     this.setState({
-        //         show:
-        //     })
-        // }
+        
+
+        let url = window.location.href;
+        let id = url.substring(url.lastIndexOf('/') + 1);
+        console.log(id);
+
+        const value = {
+            name: id
+        }
+
+        if(id !== 'products'){
+            axios.get(`${domain}/commonProducts`, {
+                params: {
+                category_id: '',  
+                color_id: '',
+                sortBy: '',
+                sortIn: '',
+                name: id,  
+                pageNo: 0 ,
+                perPage: 0
+                }
+            })
+            
+            // .then(data => console.log('Product Details' + data.data.product_details))
+            .then( data => { if(data.data.product_details==='No details are available') { this.setState({no_products: true}) } else { this.setState({display: data.data.product_details}) } })
+            // .then(data=> this.setState({display: data.data.product_details}))
+            
+        }
+
+
 
     }
 
@@ -100,16 +120,16 @@ export class Products extends Component {
         .then(data=>this.setState({display: data.product_details}))
     }
 
-    sortCat = (item) => {
+    sortCat = (item,catname) => {
         fetch(`${domain}/getProductByCateg/${item}`)
         .then(response => response.json())
-        .then(data=>this.setState({display: data.product_details,cat_selcted:true,id_cat:item}))
+        .then(data=>this.setState({display: data.product_details,cat_selcted:true,id_cat:item,currentCategory:catname}))
     }
 
     sortByCatColor = (category_id,color_id) => {
         fetch(`${domain}/getProductByColor/${category_id}/${color_id}`)
         .then(response => response.json())
-        .then(data=>this.setState({display: data.product_details,cat_selcted:false}))
+        .then(data=>this.setState({display: data.product_details,cat_selcted:false,currentCategory:''}))
     }
 
     sortByColor = (id) => {
@@ -152,12 +172,14 @@ export class Products extends Component {
                 if(response.data.product_details === 'No details are available')
                 {
                     this.setState({
-                        no_products: 'NO PRODUCT FOUND'
+                        no_products: 'NO PRODUCT FOUND',
+                        currentCategory: ''
                     })
                 }
                 else {
                     this.setState({ display: response.data.product_details,
-                                    no_products: ''    
+                                    no_products: '',
+                                    currentCategory: ''    
                     });       
                 }
                 // this.setState({ display: response.data.product_details });
@@ -170,7 +192,7 @@ export class Products extends Component {
     allProduct = () => {
         fetch(`${domain}/getAllProducts`)
         .then(response => response.json())
-        .then(data => this.setState({ display: data.product_details }));
+        .then(data => this.setState({ display: data.product_details, currentCategory: '' }));
     }
 
     handlePageChange(pageNumber) {
@@ -191,7 +213,7 @@ export class Products extends Component {
         const indexOfLastDisplay = currentPage * displayPerPage;
         const indexOfFirstDisplay = indexOfLastDisplay - displayPerPage;
         const currentDisplay = display.slice(indexOfFirstDisplay, indexOfLastDisplay);
-
+        
         const renderDisplay = currentDisplay.map(item=> 
             <div>{item.product_name}</div>
             );
@@ -225,7 +247,7 @@ export class Products extends Component {
                                 <div>
                                     { this.state.show && this.state.categories.map(item => <div>
 
-                                        <div className="center cat_l" onClick={()=>this.sortCat(item._id)}>
+                                        <div className="center cat_l" onClick={()=>this.sortCat(item._id,item.category_name)}>
                                             {item.category_name}
                                             <hr/> 
                                         </div>
@@ -237,7 +259,8 @@ export class Products extends Component {
                                     { this.state.showColor && this.state.colors.map(item => 
                                     <Col xs='4' className="color-center"> 
                                         <div>
-                                             <button onClick={() => this.sortByColor(item._id)} style={{ backgroundColor: item.color_name }} className="color-btn">  </button>
+                                             <button data-tip={item.color_name} onClick={() => this.sortByColor(item._id)} style={{ backgroundColor: item.color_name }} className="color-btn">  </button>
+                                             <ReactTooltip />
                                         </div>
                                     </Col>
                                     )}
@@ -246,7 +269,7 @@ export class Products extends Component {
                         </Col>
                         <Col xs='9'>
                             <Row>
-                                <Col xs='8'>All Categories</Col>
+                                <Col xs='8'>{this.state.currentCategory.length > 0 ? this.state.currentCategory : 'All Categories'} </Col>
                                 <Col xs='4'>Sort by :
                                     <button onClick={this.sortByRating} className="btn_sorting"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></button>
                                     <button onClick={this.descending} className="btn_sorting"><img src="https://img.icons8.com/material-sharp/24/000000/rupee.png" /><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg></button>
@@ -273,7 +296,8 @@ export class Products extends Component {
                                         <bold>₹ {item.product_cost}</bold>
                                     </div>
                                     <div className="center">
-                                        <button className="card-btn" onClick={()=>this.props.addToCart(item)}>Add To Cart</button>
+                                        <button data-tip="Add To Cart" className="card-btn" onClick={()=>this.props.addToCart(item)}>Add To Cart</button>
+                                        <ReactTooltip />
                                     </div>
                                     <div className="center">
                                     {isNaN(item.product_rating) ? 
@@ -312,7 +336,7 @@ export class Products extends Component {
                                 </ul>
                             }  */}
                             <ul>
-                            {pageNumbers.map(number => {
+                            {this.state.no_products === '' && pageNumbers.map(number => {
                                 return (
                                 <div
                                     key={number}

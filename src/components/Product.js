@@ -58,6 +58,8 @@ export class Product extends Component {
         return (
             <div>
                 Search Product Page
+                {this.state.display.length > 3 ? this.state.display.map(item=>
+                <div>{item.product_name}</div> ) : '' }
                 {this.state.display.map(item=>
                     <div>{item.product_name}</div>
                     )}
