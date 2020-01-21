@@ -22,7 +22,7 @@ export class Cart extends Component {
         super(props);
         this.state = {
             SubTotal: 0,
-            Gst: 0,
+            gst: 0,
             OrderTotal: 0,
             // quantity: 1,
             quantity: [],
@@ -56,27 +56,53 @@ export class Cart extends Component {
     incQuantity = (index) => {
         console.log(this.state.quantity[index]===undefined);
         
-        if(this.state.quantity[index]===undefined){
-            console.log('index is' + index);
-            console.log(this.state.quantity[index])
-            this.setState({
-                quantity: this.state.quantity[index] = 1
-            })
-        }
+        if(this.state.quantity[index] < 9 || this.state.quantity[index]===undefined ){
 
-        if(this.state.quantity[index]!==undefined){
-            console.log(this.state.quantity[index])
-            this.setState({
-                // quantity: [...this.state.quantity,this.state.quantity[0] = 2]
-            })
+        
+            if(this.state.quantity[index]===undefined){
+                console.log('index is' + index);
+                console.log(this.state.quantity[index])
+                this.setState({
+                    quantity: this.state.quantity[index] = 0
+                })
+            }
+
+            if(this.state.quantity[index]!==undefined){
+                console.log('index is' + index);
+                console.log(this.state.quantity[index])
+                let quantity = [...this.state.quantity];
+                quantity[index] = this.state.quantity[index] + 1;
+                this.setState({quantity})
+            }
+
+
         }
 
     }
 
     decQuantity = (index) => {
-        this.setState({
-            quantity: [...this.state.quantity,this.state.quantity[index] = 1]
-        })
+
+        if(this.state.quantity[index] > 0 || this.state.quantity[index]===undefined ){
+
+
+            if(this.state.quantity[index]===undefined){
+                console.log('index is' + index);
+                console.log(this.state.quantity[index])
+                this.setState({
+                    quantity: this.state.quantity[index] = 0
+                })
+            }
+
+            if(this.state.quantity[index]!==undefined){
+                console.log('index is' + index);
+                console.log(this.state.quantity[index])
+                let quantity = [...this.state.quantity];
+                quantity[index] = this.state.quantity[index] - 1;
+                this.setState({quantity})
+            }
+
+        }
+
     }
 
     render() {
@@ -146,9 +172,9 @@ export class Cart extends Component {
                                         </td>
                                         <td>
                                             <div className="counter_qty">
-                                                <button className="qty_btn" onClick={() => this.incQuantity(index)}>+</button>
-                                                    &nbsp; <span className="instance">{this.state.quantity[index]}</span> &nbsp;
                                                 <button className="qty_btn" onClick={() => this.decQuantity(index)}>-</button>
+                                                    &nbsp; <span className="instance">{ this.state.quantity[index] >0 ? this.state.quantity[index] : 0 }</span> &nbsp;
+                                                <button className="qty_btn" onClick={() => this.incQuantity(index)}>+</button>    
                                             </div>
                                         </td>
                                         <td>
@@ -169,11 +195,18 @@ export class Cart extends Component {
                         </Col>
                         <Col xs="4">
                             <Card>
-                                <CardHeader className="center">Review Order</CardHeader>
+                                <CardHeader className="center">Review Order</CardHeader>    
                                 <CardBody>
-                                    <div>SubTotal: { this.props.items.reduce((accu,curr)=>{ return accu += (curr.product_cost * this.state.quantity) },0) }</div><hr/>
-                                    <div>GST (5%): { this.props.items.reduce((accu,curr)=>{ return accu = (accu + curr.product_cost * 0.05).toFixed(2) * this.state.quantity },0) }</div><hr/>
-                                    <div>Order Total: { this.props.items.reduce((accu,curr)=>{ return accu = (accu + curr.product_cost + curr.product_cost * 0.05).toFixed(2) * this.state.quantity },0) } </div><hr/>
+                                    <div>SubTotal: { this.props.items.reduce((accu,curr,index)=>{ if (this.state.quantity[index] !== undefined ) { return accu += (curr.product_cost * this.state.quantity[index]) } return accu; }, 0) }</div><hr/>
+                                    <div>GST (5%): { this.props.items.reduce((accu,curr,index)=>{ if (this.state.quantity[index] !== undefined ) { return accu = (accu + curr.product_cost * 0.05).toFixed(2) * this.state.quantity[index] } return accu; }, 0) }</div><hr/>
+                                    {/* <div>Order Total: { this.props.items.reduce((accu,curr,index)=>{ if (this.state.quantity[index] !== undefined ) { return accu = accu + ((curr.product_cost * this.state.quantity[index])  ) + ((accu + curr.product_cost * 0.05).toFixed(2) * this.state.quantity[index]) } return accu; }, 0) }</div><hr/> */}
+                                    <div>Order Total: { this.props.items.reduce((accu,curr,index)=>{ if (this.state.quantity[index] !== undefined ) { return accu = (accu + curr.product_cost + (curr.product_cost * 0.05)).toFixed(2) * this.state.quantity[index] } return accu; }, 0) }</div><hr/>
+                                    {/* <div>SubTotal: { this.props.items.reduce((accu,curr,index)=>{ return accu += (curr.product_cost * this.state.quantity[index]) },0) }</div><hr/> */}
+                                    {/* <div>GST (5%): { this.props.items.reduce((accu,curr,index)=>{ return accu = (accu + curr.product_cost * 0.05).toFixed(2) * this.state.quantity[index] },0) }</div><hr/> */}
+                                    {/* <div>Order Total: { this.props.items.reduce((accu,curr,index)=>{ return accu = (accu + curr.product_cost + curr.product_cost * 0.05).toFixed(2) * this.state.quantity[index] },0) } </div><hr/> */}
+                                    {/* <div>SubTotal: { this.props.items.reduce((accu,curr,index)=>{ return accu += (curr.product_cost * this.state.quantity[index]) },0) }</div><hr/>
+                                    <div>GST (5%): { this.props.items.reduce((accu,curr,index)=>{ return accu = (accu + curr.product_cost * 0.05).toFixed(2) * this.state.quantity[index] },0) }</div><hr/>
+                                    <div>Order Total: { this.props.items.reduce((accu,curr,index)=>{ return accu = (accu + curr.product_cost + curr.product_cost * 0.05).toFixed(2) * this.state.quantity[index] },0) } </div><hr/> */}
                                     <Button onClick={this.proceedBuy} color="primary width-100">{ localStorage.getItem('token') ? 'Proceed To Buy' :<Link to="/login" style={{ color: '#000' }}>Proceed To Buy</Link> }</Button>
 
                                 </CardBody>

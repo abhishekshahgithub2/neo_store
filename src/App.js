@@ -18,6 +18,8 @@ import ChangePassword from './components/ChangePassword';
 import AddAddress from './components/AddAdress';
 import EditAddress from './components/EditAddress';
 import Product from './components/Product';
+import Subscriber from './components/Static_Pages/Subscriber';
+import Contactus from './components/Static_Pages/ContactUs';
 
 import {
   BrowserRouter as Router,
@@ -95,6 +97,12 @@ class App extends Component {
                   </Route>
                   <Route path="/product">
                       <Product />
+                  </Route>
+                  <Route path="/subscriber">
+                      <Subscriber />
+                  </Route>
+                  <Route path="/contactus">
+                      <Contactus />
                   </Route>
                 </Switch>
               <Footer/>
